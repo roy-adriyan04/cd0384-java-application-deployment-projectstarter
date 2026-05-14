@@ -119,57 +119,10 @@
 
         <!-- SpotBugs -->
 
-        <plugin>
-
-            <groupId>com.github.spotbugs</groupId>
-            <artifactId>spotbugs-maven-plugin</artifactId>
-            <version>4.8.3.1</version>
-
-            <configuration>
-                <htmlOutput>true</htmlOutput>
-                <xmlOutput>false</xmlOutput>
-            </configuration>
-
-            <executions>
-
-                <execution>
-
-                    <phase>verify</phase>
-
-                    <goals>
-                        <goal>spotbugs</goal>
-                    </goals>
-
-                </execution>
-
-            </executions>
-
-        </plugin>
-
     </plugins>
 
 </build>
 
     <!-- SpotBugs HTML Reporting -->
-
-    <reporting>
-
-        <plugins>
-
-            <plugin>
-
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.8.3.1</version>
-
-                <configuration>
-                    <xmlOutput>false</xmlOutput>
-                </configuration>
-
-            </plugin>
-
-        </plugins>
-
-    </reporting>
 
 </project>

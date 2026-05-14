@@ -61,11 +61,12 @@
 
                 <configuration>
 
-                    <useModulePath>false</useModulePath>
+                    <compilerArgs>
 
-                    <argLine>
-                        --add-opens security.service/com.udacity.catpoint.service=ALL-UNNAMED
-                    </argLine>
+                        <arg>--add-reads</arg>
+                        <arg>security.service=ALL-UNNAMED</arg>
+
+                    </compilerArgs>
 
                 </configuration>
 

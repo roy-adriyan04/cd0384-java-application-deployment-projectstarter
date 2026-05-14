@@ -13,14 +13,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static org.mockito.Mockito.lenient;
 
 import java.util.HashSet;
 import java.util.Set;
-
+import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyFloat;
 import static org.mockito.Mockito.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 @ExtendWith(MockitoExtension.class)
 class SecurityServiceTest {
@@ -229,5 +233,40 @@ class SecurityServiceTest {
 
         verify(securityRepository)
                 .setAlarmStatus(AlarmStatus.ALARM);
+    }
+
+    @Test
+    void alarmStateDoesNotChangeWhenSensorChanges() {
+
+        Sensor sensor = new Sensor("Sensor", SensorType.DOOR);
+
+        when(securityRepository.getAlarmStatus())
+                .thenReturn(AlarmStatus.ALARM);
+
+        securityService.changeSensorActivationStatus(sensor, true);
+
+        verify(securityRepository, never())
+                .setAlarmStatus(AlarmStatus.PENDING_ALARM);
+    }
+
+    @ParameterizedTest
+    @EnumSource(ArmingStatus.class)
+    void changingToAnyArmedStateResetsSensors(ArmingStatus status) {
+
+        Sensor sensor = new Sensor("Sensor", SensorType.DOOR);
+        sensor.setActive(true);
+
+        Set<Sensor> sensors = new HashSet<>();
+        sensors.add(sensor);
+
+        lenient().when(securityRepository.getSensors()).thenReturn(sensors);
+
+        securityService.setArmingStatus(status);
+
+        if (status == ArmingStatus.DISARMED) {
+            Assertions.assertTrue(sensor.getActive());
+        } else {
+            assertFalse(sensor.getActive());
+        }
     }
 }

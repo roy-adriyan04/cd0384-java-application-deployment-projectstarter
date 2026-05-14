@@ -17,11 +17,23 @@
 
     <dependencies>
 
+        <!-- Internal Module -->
+
         <dependency>
             <groupId>com.udacity.catpoint</groupId>
             <artifactId>image-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
+        <!-- UI -->
+
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout-swing</artifactId>
+            <version>11.4.2</version>
+        </dependency>
+
+        <!-- Utilities -->
 
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -29,17 +41,15 @@
             <version>33.2.1-jre</version>
         </dependency>
 
+        <!-- JSON -->
+
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.11.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.miglayout</groupId>
-            <artifactId>miglayout-swing</artifactId>
-            <version>11.4.2</version>
-        </dependency>
+        <!-- Logging -->
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -53,7 +63,7 @@
 
         <plugins>
 
-            <!-- Compiler -->
+            <!-- Compiler Plugin -->
 
             <plugin>
 
@@ -72,7 +82,7 @@
 
             </plugin>
 
-            <!-- Surefire -->
+            <!-- Surefire Plugin -->
 
             <plugin>
 
@@ -80,12 +90,18 @@
                 <version>3.2.5</version>
 
                 <configuration>
+
                     <useModulePath>false</useModulePath>
+
+                    <argLine>
+                        --add-opens security.service/com.udacity.catpoint.service=ALL-UNNAMED
+                    </argLine>
+
                 </configuration>
 
             </plugin>
 
-            <!-- Fat Jar -->
+            <!-- Shade Plugin -->
 
             <plugin>
 
